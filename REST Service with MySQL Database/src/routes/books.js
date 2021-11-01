@@ -6,87 +6,108 @@ const Book = require("../models/books");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
     // return all books
+    let books = req.query.title
+        ? await Book.getBooks(req.query.title)
+        : await Book.getBooks();
 
-    // check if there is a query title
-    let books = [];
-    if (req.query.title) {
-        books = Book.getAllBooks(req.query.title);
-    } else {
-        books = Book.getAllBooks();
-    }
-
-    if (books.length === 0) {
+    if (books.length === 0)
         return res.status(404).json({
             message: "No books found",
             books,
         });
-    }
+
     return res.status(200).send({
         message: "Books found",
         books,
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
     // return a book
     let { id } = req.params;
-    const book = Book.getBook(id);
+    const book = await Book.getBook(id);
 
-    if (!book) {
+    if (!book)
         return res.status(404).json({
             message: "Book not found",
         });
-    }
+
     return res.status(200).send({
         message: "Book found",
         book,
     });
 });
 
-router.post("/add", (req, res) => {
+router.post("/add", async (req, res) => {
     // add a new book
-    let { title, author, published_date } = req.body;
-    const result = Book.addBook(title, author, published_date);
+    let newBook = {
+        isbn: req.body.isbn,
+        title: req.body.title,
+        author: req.body.author,
+        publisher: req.body.publisher,
+        publish_date: new Date(req.body.publish_date),
+    };
+
+    const result = await Book.addBook({
+        ...newBook,
+        status: true,
+        created_at: new Date(),
+        updated_at: new Date(),
+    });
+
     return res.status(200).send({
         message: "Book added successfully",
-        result,
+        book: {
+            id: result.insertId,
+            ...newBook,
+        },
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
     // delete a book
     let { id } = req.params;
-    const result = Book.deleteBook(id);
+    const result = await Book.deleteBookById(id);
 
-    if (!result) {
+    if (!result)
         return res.status(404).json({
             message: "Book not found",
         });
-    }
 
     return res.status(200).send({
         message: "Book deleted successfully",
-        result,
+        old: result.oldBook,
     });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
     // update a book
     let { id } = req.params;
-    let { title, author, published_date } = req.body;
-    const result = Book.updateBook(id, title, author, published_date);
+    const updatedBook = {
+        title: req.body.title,
+        author: req.body.author,
+        publisher: req.body.publisher,
+        publish_date: new Date(req.body.publish_date),
+        updated_at: new Date(),
+    };
+    const { result, oldBook, newBook } = await Book.updateBookById(
+        updatedBook,
+        id
+    );
 
-    if (!result) {
+    console.log(oldBook);
+
+    if (result.affectedRows === 0)
         return res.status(404).json({
             message: "Book not found",
         });
-    }
 
     return res.status(200).send({
         message: "Book updated successfully",
-        result,
+        old: oldBook,
+        new: newBook,
     });
 });
 
