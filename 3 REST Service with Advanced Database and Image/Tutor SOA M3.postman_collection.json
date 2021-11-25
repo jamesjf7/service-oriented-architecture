@@ -1,0 +1,48 @@
+{
+	"info": {
+		"_postman_id": "619d56ec-a963-4772-9a55-bc1e76bdba95",
+		"name": "Tutor SOA M3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/api/uploads",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file_name",
+							"value": "testupload1123222",
+							"type": "text"
+						},
+						{
+							"key": "file_data",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "nama",
+							"value": "SOEKARNO",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/api/uploads",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"uploads"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
