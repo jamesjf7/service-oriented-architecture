@@ -1,4 +1,6 @@
-const { response } = require("express");
+const {
+    response
+} = require("express");
 const express = require("express");
 
 // model
@@ -8,9 +10,9 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     // return all books
-    let books = req.query.title
-        ? await Book.getBooks(req.query.title)
-        : await Book.getBooks();
+    let books = req.query.title ?
+        await Book.getBooks(req.query.title) :
+        await Book.getBooks();
 
     if (books.length === 0)
         return res.status(404).json({
@@ -26,7 +28,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     // return a book
-    let { id } = req.params;
+    let {
+        id
+    } = req.params;
     const book = await Book.getBook(id);
 
     if (!book)
@@ -68,7 +72,9 @@ router.post("/add", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     // delete a book
-    let { id } = req.params;
+    let {
+        id
+    } = req.params;
     const result = await Book.deleteBookById(id);
 
     if (!result)
@@ -84,7 +90,9 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     // update a book
-    let { id } = req.params;
+    let {
+        id
+    } = req.params;
     const updatedBook = {
         title: req.body.title,
         author: req.body.author,
@@ -92,7 +100,11 @@ router.put("/:id", async (req, res) => {
         publish_date: new Date(req.body.publish_date),
         updated_at: new Date(),
     };
-    const { result, oldBook, newBook } = await Book.updateBookById(
+    const {
+        result,
+        oldBook,
+        newBook
+    } = await Book.updateBookById(
         updatedBook,
         id
     );
