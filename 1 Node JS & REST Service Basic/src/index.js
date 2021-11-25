@@ -1,16 +1,28 @@
 /**
- * name : index.js / app.js / main.js / server.js
+ * Intro  
+ * Node.js adalah perangkat lunak yang bersifat open source dan digunakan untuk menjalankan kode JavaScript diluar web browser, 
+ * Node.js sama seperti PHP, Ruby, Python dan Go, yaitu berjalan disisi server. 
+ * Node.js secara default sudah memiliki HTTP server sendiri, jadi bisa berjalan tanpa harus menginstall web server tambahan seperti Apache dan Nginx.
+ * 
+ * Express Js adalah salah satu framework Node.js yang paling populer dan banyak digunakan oleh para developer, 
+ * karena memiliki ukuran yang minimalis dan performa yang sangat cepat . 
+ * Express bersifat open source dan mudah untuk di pelajari.
+ * 
+ * Install node.js di : https://nodejs.org/en/download/.
+ * Cek instalasi node.js pada komputer anda menggunakan perintah : node -v & npm -v
+ * 
  */
 
+/**
+ * Module dependecnies 
+ */
 const express = require("express");
 const books = require("./routes/books");
 
 const app = express();
 
-// router for math
 
 app.set("port", 3000);
-
 /**
  * express.json() => middleware untuk parsing data application/json
  * express.urlencoded(...) => middleware untuk parsing data application/x-www-form-urlencoded
