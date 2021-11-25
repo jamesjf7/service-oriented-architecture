@@ -1,5 +1,5 @@
 {
-  "name": "node-js-and-rest-service-basic",
+  "name": "4-3rd-party-service",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,9 +7,11 @@
     "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.24.0",
     "express": "^4.17.1"
   }
 }
