@@ -45,9 +45,17 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/add", (req, res) => {
+router.post("/", (req, res) => {
     // add a new book
+    console.log(req.boy);
+
     let { title, author, published_date } = req.body;
+
+    if (title == null || author == null || published_date == null)
+        return res.status(400).send({
+            message: "Field tidak sesuai ketentuan!"
+        })
+
     const result = Book.addBook(title, author, published_date);
     return res.status(200).send({
         message: "Book added successfully",

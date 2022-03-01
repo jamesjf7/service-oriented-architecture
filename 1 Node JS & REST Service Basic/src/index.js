@@ -17,6 +17,7 @@
  * Module dependecnies 
  */
 const express = require("express");
+
 const books = require("./routes/books");
 
 const app = express();
@@ -27,13 +28,15 @@ app.set("port", 3000);
  * express.json() => middleware untuk parsing data application/json
  * express.urlencoded(...) => middleware untuk parsing data application/x-www-form-urlencoded
  **/
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 // Routes
 
 // simple route
 app.get("/", (req, res) => {
+    console.log(req.body);
+    // console.log(req.query);
     res.status(200).send("Hello World!");
     /**
      * res.status(...) => status code
